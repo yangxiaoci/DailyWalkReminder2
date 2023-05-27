@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    #reminder {
+      font-size: 24px;
+      text-align: center;
+      margin-top: 50px;
+    }
+    #light {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      margin: 50px auto;
+      background-color: gray;
+      transition: background-color 0.5s;
+    }
+  </style>
+</head>
+<body>
+  <div id="reminder">
+    <p>起床時間和走動時間設定：</p>
+    <input type="time" id="wakeupTime">
+    <input type="time" id="exerciseTime">
+    <button onclick="setReminder()">設定</button>
+  </div>
+  <div id="light"></div>
+
+  <script>
+    function setReminder() {
+      var wakeupTime = document.getElementById("wakeupTime").value;
+      var exerciseTime = document.getElementById("exerciseTime").value;
+
+      var currentTime = new Date();
+      var currentHour = currentTime.getHours();
+      var currentMinute = currentTime.getMinutes();
+
+      var wakeupHour = parseInt(wakeupTime.split(":")[0]);
+      var wakeupMinute = parseInt(wakeupTime.split(":")[1]);
+
+      var exerciseHour = parseInt(exerciseTime.split(":")[0]);
+      var exerciseMinute = parseInt(exerciseTime.split(":")[1]);
+
+      var wakeupDiff = (wakeupHour - currentHour) * 60 + (wakeupMinute - currentMinute);
+      var exerciseDiff = (exerciseHour - currentHour) * 60 + (exerciseMinute - currentMinute);
+
+      if (wakeupDiff > 0) {
+        setTimeout(function() {
+          alert("起床時間到了！");
+          document.getElementById("light").style.backgroundColor = "red";
+        }, wakeupDiff * 60000);
+      }
+
+      if (exerciseDiff > 0) {
+        setTimeout(function() {
+          alert("走動時間到了！");
+          document.getElementById("light").style.backgroundColor = "green";
+        }, exerciseDiff * 60000);
+      }
+    }
+  </script>
+</body>
+</html>
